@@ -1,0 +1,19 @@
+trigger:
+- main  # or your branch name
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'Digisolve.github.io'  # The folder where index.html is located
+    Contents: 'index.html'  # Only the index.html file will be copied
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Destination directory for the file
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'  # Path to the directory containing index.html
+    ArtifactName: 'html-css-site'  # Name of the artifact to be published
+    publishLocation: 'Container'  # Publishes the artifact to the container
+
